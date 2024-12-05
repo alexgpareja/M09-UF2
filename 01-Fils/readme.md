@@ -184,6 +184,7 @@ No es exactament igual però després de molts intents, ha sigut la més semblan
 ### Posar el fil en sleep
 
 Canvis a la classe `Fil.java` per afegir el metode `sleep()`:
+
 ```java
 public class Fil extends Thread {
     private String name;
@@ -208,3 +209,60 @@ public class Fil extends Thread {
 }
 ```
 
+### Sortida esperada
+
+```bash
+Termina thread main
+Juan 1
+Pepe 1
+Juan 2
+Pepe 2
+Juan 3
+Pepe 3
+Juan 4
+Pepe 4
+Juan 5
+Pepe 5
+Juan 6
+Pepe 6
+Juan 7
+Pepe 7
+Juan 8
+Pepe 8
+Juan 9
+Pepe 9
+Termina el fil Pepe
+Termina el fil Juan
+```
+
+### Sortida obtinguda
+
+```bash
+Termina thread main
+Juan 1
+Pepe 1
+Juan 2
+Pepe 2
+Pepe 3
+Juan 3
+Pepe 4
+Juan 4
+Pepe 5
+Juan 5
+Juan 6
+Pepe 6
+Pepe 7
+Juan 7
+Pepe 8
+Juan 8
+Pepe 9
+Juan 9
+Termina el fil Juan
+Termina el fil Pepe
+```
+
+![alt text](image-2.png)
+
+### Raó d'aquesta sortida
+
+Amb el mètode `Thread.sleep()` força pauses curtes entre les iteracions de cada fil, així l’ordre d'execució és estrictament alternat.
