@@ -3,8 +3,8 @@ package com.alexgil;
 public class Futbolista extends Thread {
 
     // Propietats
-    private int ngols = 0;
-    private int ntirades = 0;
+    private int ngols;
+    private int ntirades;
 
     // Constants
     public static final int NUM_JUGADORS = 11;
@@ -14,6 +14,8 @@ public class Futbolista extends Thread {
     // Constructor: només usa super per assignar el nom del jugador
     public Futbolista(String nom) {
         super(nom);
+        ngols = 0;
+        ntirades = 0;
     }
 
     @Override
@@ -42,15 +44,19 @@ public class Futbolista extends Thread {
 
         Futbolista[] jugadors = new Futbolista[NUM_JUGADORS];
 
-        System.out.println("Inici dels xuts --------------------");
-
-        // Crear i iniciar fils
+        // Crear fils
         for (int i = 0; i < NUM_JUGADORS; i++) {
             jugadors[i] = new Futbolista(nomsJugadors[i]);
+        }
+
+        System.out.println("Inici dels xuts --------------------");
+
+        // Iniciar fils
+        for (int i = 0; i < NUM_JUGADORS; i++) {
             jugadors[i].start();
         }
 
-        // Esperar a que acabin
+        // Esperar que acabin els fils
         for (int i = 0; i < NUM_JUGADORS; i++) {
             try {
                 jugadors[i].join();
