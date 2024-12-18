@@ -73,4 +73,5 @@ public class Futbolista extends Thread {
             System.out.println(jugadors[i].getName() + " -> " + jugadors[i].getNgols() + " gols");
         }
     }
+
 }
