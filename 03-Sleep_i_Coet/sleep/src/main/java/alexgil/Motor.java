@@ -24,9 +24,10 @@ public class Motor extends Thread {
         Random random = new Random();
 
         while (true) {
-            if (potenciaActual != potenciaObjectiu) {
+            while (potenciaActual != potenciaObjectiu) {
                 potenciaActual += (potenciaActual < potenciaObjectiu) ? 1 : -1;
-                String accio = (potenciaActual < potenciaObjectiu) ? "Incre." : "Decre.";
+                String accio = (potenciaActual < potenciaObjectiu) ? "Incre."
+                        : (potenciaActual > potenciaObjectiu) ? "Decre." : "FerRes";
                 System.out.printf("%-8s: %s Objectiu: %d Actual: %d%n", getName(), accio, potenciaObjectiu,
                         potenciaActual);
             }
@@ -38,20 +39,14 @@ public class Motor extends Thread {
                 System.out.println(getName() + ": Error " + e.getMessage());
             }
 
-            if (potenciaObjectiu == 0 && potenciaActual == 0) {
-                System.out.printf("%-8s: Parat. Objectiu: %d Actual: %d%n", getName(), potenciaObjectiu,
-                        potenciaActual);
-                break; // Atura el fil quan la potència arriba a 0
+            try {
+                sleep(100);
+            } catch (InterruptedException e) {
+                System.out.println("El fil ha estat interromput.");
             }
-
-            // Pausa de 100 ms si la potència està estabilitzada
-            if (potenciaActual == potenciaObjectiu) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    System.out.println(getName() + ": Error " + e.getMessage());
-                }
-            }
+            if (potenciaActual == 0)
+                break;
         }
+
     }
 }
