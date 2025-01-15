@@ -13,12 +13,17 @@ public class Coet {
             motors[i] = new Motor(i);
         }
 
+        // Passar potència inicial
+        passaAPotencia(5); // Potència inicial diferent de 0
+        System.out.println("Passant potència inicial a 5");
+
         // Iniciar els motors una vegada
         arranca();
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
             try {
+                System.out.print("Introdueix la potència objectiu (0 per parar): ");
                 int p = Integer.parseInt(reader.readLine());
 
                 if (p < 0 || p > 10) {
@@ -27,7 +32,7 @@ public class Coet {
                 }
 
                 passaAPotencia(p);
-                System.out.printf("Passant a potencia: %d\n", p);
+                System.out.printf("Passant a potència: %d%n", p);
 
                 if (p == 0) {
                     System.out.println("Simulació acabada.");

@@ -7,26 +7,12 @@ public class Motor extends Thread {
     int potenciaActual;
     int potenciaObjectiu;
     int id;
-    boolean funcionant;
 
     public Motor(int id) {
-        super();
+        super("Motor " + id); // Assigna un nom al fil
         this.id = id;
-        potenciaActual = 0;
-        potenciaObjectiu = 0;
-        funcionant = true;
-    }
-
-    public int getPotenciaActual() {
-        return potenciaActual;
-    }
-
-    public void setPotenciaActual(int potenciaActual) {
-        this.potenciaActual = potenciaActual;
-    }
-
-    public int getPotenciaObjectiu() {
-        return potenciaObjectiu;
+        this.potenciaActual = 0;
+        this.potenciaObjectiu = 0;
     }
 
     public void setPotencia(int p) {
@@ -37,16 +23,11 @@ public class Motor extends Thread {
     public void run() {
         Random random = new Random();
 
-        while (funcionant) {
-
+        while (true) {
             if (potenciaActual != potenciaObjectiu) {
-
                 potenciaActual += (potenciaActual < potenciaObjectiu) ? 1 : -1;
-
-                String accio = (potenciaActual < potenciaObjectiu) ? "Incre."
-                        : (potenciaActual > potenciaObjectiu) ? "Decre." : "FerRes";
-
-                System.out.printf("%-4s: %s Objectiu: %d Actual: %d%n", getName(), accio, potenciaObjectiu,
+                String accio = (potenciaActual < potenciaObjectiu) ? "Incre." : "Decre.";
+                System.out.printf("%-8s: %s Objectiu: %d Actual: %d%n", getName(), accio, potenciaObjectiu,
                         potenciaActual);
             }
 
@@ -57,10 +38,19 @@ public class Motor extends Thread {
                 System.out.println(getName() + ": Error " + e.getMessage());
             }
 
-            if (potenciaActual == 0 && potenciaObjectiu == 0) {
-                funcionant = false;
-                System.out.printf("%-4s: Parat. Objectiu: %d Actual: %d%n", getName(), potenciaObjectiu,
+            if (potenciaObjectiu == 0 && potenciaActual == 0) {
+                System.out.printf("%-8s: Parat. Objectiu: %d Actual: %d%n", getName(), potenciaObjectiu,
                         potenciaActual);
+                break; // Atura el fil quan la potència arriba a 0
+            }
+
+            // Pausa de 100 ms si la potència està estabilitzada
+            if (potenciaActual == potenciaObjectiu) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    System.out.println(getName() + ": Error " + e.getMessage());
+                }
             }
         }
     }
