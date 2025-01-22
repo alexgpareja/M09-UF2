@@ -1,7 +1,6 @@
 package com.alexgil;
 
 public class Compte extends Thread {
-    
 
     private static Compte instancia; // Instància única (Singleton)
     private static float saldo;
@@ -19,16 +18,13 @@ public class Compte extends Thread {
         return instancia;
     }
 
-
     // Getters i setters
-    public static float getSaldo() {
+    public float getSaldo() {
         return saldo;
     }
 
-    public static void setSaldo(float saldo) {
+    public void setSaldo(float saldo) {
         Compte.saldo = saldo;
     }
-
-
 
 }
