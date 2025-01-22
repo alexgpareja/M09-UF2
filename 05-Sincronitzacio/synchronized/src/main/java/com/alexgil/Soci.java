@@ -34,7 +34,11 @@ public class Soci extends Thread {
             // s’itera al llarg dels mesos
             for (int mes = 0; mes < 12; mes++) {
                 // als mesos parells suma 10, als imparells resta 10
-                COMPTE.setSaldo((mes % 2 == 0) ? COMPTE.getSaldo() + APORTACIO : COMPTE.getSaldo() - APORTACIO);
+                // afegit synchronized en el bloc de codi, per que nomes 1 soci pugui fer-ho a
+                // la vegada
+                synchronized (COMPTE) {
+                    COMPTE.setSaldo((mes % 2 == 0) ? COMPTE.getSaldo() + APORTACIO : COMPTE.getSaldo() - APORTACIO);
+                }
 
                 try {
                     Thread.sleep(rnd.nextInt(ESPERA_MAX)); // Temps aleatori, de 0 a ESPERA MAX
