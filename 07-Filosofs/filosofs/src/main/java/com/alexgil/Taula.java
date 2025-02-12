@@ -1,7 +1,5 @@
 package com.alexgil;
 
-import java.util.ArrayList;
-
 public class Taula {
 
     // Propietats
@@ -16,20 +14,29 @@ public class Taula {
             forquilles[i] = new Forquilla(i);
         }
 
-        // Crear els filosofs
+        // Creem els filòsofs i assignem les forquilles
         for (int i = 0; i < numFilosofs; i++) {
-            comensals[i] = new Filosof();
+            Forquilla esquerra = forquilles[i];
+            Forquilla dreta = forquilles[(i + 1) % numFilosofs]; // La forquilla dreta és la següent (o la 0 si és
+                                                                 // l'últim)
+            comensals[i] = new Filosof("fil" + i, esquerra, dreta);
         }
     }
 
     // Mètode per mostrar la taula i la relació filòsofs - forquilles
     public void showTaula() {
-
+        for (Filosof comensal : comensals) {
+            System.out
+                    .println("Comensal: " + comensal.getName() + " esq: " + comensal.getForquillaEsquerra().getNum()
+                            + " dret: " + comensal.getForquillaDreta().getNum());
+        }
     }
 
     // Mètode per iniciar el sopar
     public void cridarAtaula() {
-
+        for (Filosof comensal : comensals) {
+            comensal.start();
+        }
     }
 
     // Mètode principal
