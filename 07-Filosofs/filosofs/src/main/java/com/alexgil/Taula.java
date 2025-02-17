@@ -9,6 +9,10 @@ public class Taula {
     // Constructor
     public Taula(int numFilosofs) {
 
+        // Inicialitzar els arrays
+        forquilles = new Forquilla[numFilosofs];
+        comensals = new Filosof[numFilosofs];
+
         // Crear forquilles
         for (int i = 0; i < numFilosofs; i++) {
             forquilles[i] = new Forquilla(i);

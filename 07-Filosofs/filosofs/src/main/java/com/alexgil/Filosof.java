@@ -20,34 +20,49 @@ public class Filosof extends Thread {
         this.random = new Random();
     }
 
-    private void menjar() throws InterruptedException {
-        // Intentar agafar les forquilles
-        synchronized (forquillaEsquerra) {
-            while (forquillaEsquerra.isEnUs()) {
-                System.out.println("Filòsof: " + nom + " deixa l'esquerra(" + forquillaEsquerra.getNum()
-                        + ") i espera (dreta ocupada)");
-                Thread.sleep(random.nextInt(500) + 500); // Esperar entre 0.5s i 1s
-            }
-            forquillaEsquerra.setEnUs(true);
-            System.out.println("Filòsof: " + nom + " agafa la forquilla esquerra " + forquillaEsquerra.getNum());
+    public void menjar() {
+        while (true) {
+            // Intenta agafar la forquilla esquerra
+            if (!forquillaEsquerra.isEnUs()) {
+                forquillaEsquerra.setEnUs(true);
+                System.out.printf("%s agafa la forquilla esquerra (%d)%n", getName(), forquillaEsquerra.getNum());
 
-            synchronized (forquillaDreta) {
-                while (forquillaDreta.isEnUs()) {
-                    System.out.println("Filòsof: " + nom + " deixa l'esquerra(" + forquillaEsquerra.getNum()
-                            + ") i espera (dreta ocupada)");
-                    Thread.sleep(random.nextInt(500) + 500); // Esperar entre 0.5s i 1s
+                // Intenta agafar la forquilla dreta
+                if (!forquillaDreta.isEnUs()) {
+                    forquillaDreta.setEnUs(true);
+                    System.out.printf("%s agafa la forquilla dreta (%d)%n", getName(), forquillaDreta.getNum());
+
+                    // Menjar
+                    System.out.println(getName() + " menja");
+                    try {
+                        Thread.sleep(1000 + new Random().nextInt(1000)); // Simula el temps de menjar
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    // Deixar les forquilles després de menjar
+                    forquillaDreta.setEnUs(false);
+                    forquillaEsquerra.setEnUs(false);
+                    System.out.println(getName() + " ha acabat de menjar");
+                    return; // Sortir del bucle quan hagi menjat
+
+                } else {
+                    // Si la forquilla dreta està ocupada, deixa la forquilla esquerra i espera
+                    System.out.printf("%s deixa l'esquerra (%d) i espera (dreta ocupada)%n",
+                            getName(), forquillaEsquerra.getNum());
+                    forquillaEsquerra.setEnUs(false);
                 }
-                forquillaDreta.setEnUs(true);
-                System.out.println("Filòsof: " + nom + " agafa la forquilla dreta " + forquillaDreta.getNum());
-
-                // Menjar
-                System.out.println("Filòsof: " + nom + " menja");
-                Thread.sleep(random.nextInt(1000) + 1000); // Menjar entre 1s i 2s
-
-                // Deixar les forquilles
-                forquillaDreta.setEnUs(false);
             }
-            forquillaEsquerra.setEnUs(false);
+
+            // No ha pogut menjar, espera abans de tornar a intentar-ho
+            gana++;
+            System.out.printf("%s gana=%d%n", getName(), gana);
+
+            try {
+                Thread.sleep(500 + new Random().nextInt(500)); // Espera entre 0.5s i 1s
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
