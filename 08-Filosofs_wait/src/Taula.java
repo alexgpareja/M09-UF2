@@ -1,5 +1,5 @@
 public class Taula {
-    
+
     // Propietats
     private Filosof[] comensals;
     private Forquilla[] forquilles;
@@ -22,10 +22,22 @@ public class Taula {
     }
 
     // Mètode per mostrar la taula
-    public void showTaula() {}
+    public void showTaula() {
+        for (Filosof comensal : comensals) {
+            System.out.printf("%s → Forquilla esquerra: %d | Forquilla dreta: %d%n",
+                    comensal.getNom(),
+                    comensal.getForquillaEsquerra().getNumero(),
+                    comensal.getForquillaDreta().getNumero());
+        }
+    }
 
     // Mètode per iniciar els fils dels filòsofs
-    public void cridarATaula() {}
+    public void cridarATaula() {
+        System.out.println("🍽️ Els filòsofs son cridats a taula!");
+        for (Filosof comensal : comensals) {
+            comensal.start();
+        }
+    }
 
     // Mètode principal
     public static void main(String[] args) {
