@@ -3,22 +3,22 @@ import java.util.Random;
 public class Filosof extends Thread {
 
     // Propietats
-    private String nom;
+    private int id;
     private Forquilla forquillaEsquerra;
     private Forquilla forquillaDreta;
     private Random random;
 
     // Constructor
-    public Filosof(String nom, Forquilla forquillaEsquerra, Forquilla forquillaDreta) {
-        this.nom = nom;
+    public Filosof(int id, Forquilla forquillaEsquerra, Forquilla forquillaDreta) {
+        this.id = id;
         this.forquillaEsquerra = forquillaEsquerra;
         this.forquillaDreta = forquillaDreta;
         this.random = new Random();
     }
 
     // Getters
-    public String getNom() {
-        return nom;
+    public int getIdFilosof() {
+        return id;
     }
 
     public Forquilla getForquillaEsquerra() {
@@ -44,4 +44,6 @@ public class Filosof extends Thread {
             menjar();
         }
     }
+
+    
 }

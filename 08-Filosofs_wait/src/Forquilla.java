@@ -23,4 +23,26 @@ public class Forquilla {
     public void setPropietari(int propietari) {
         this.propietari = propietari;
     }
+
+    public boolean isLliure() {
+        return propietari == LLIURE;
+    }
+
+    // Agafar la forquilla (espera si està ocupada)
+    public synchronized void agafar(int idFilosof) {
+        while (!isLliure()) {
+            try {
+                wait(); // Espera fins que la forquilla sigui lliure
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        propietari = idFilosof;
+    }
+
+    // Deixar la forquilla i notificar als altres fils
+    public synchronized void deixar() {
+        propietari = LLIURE;
+        notifyAll(); // Notifica als altres fils que ara està lliure
+    }
 }
