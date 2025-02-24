@@ -15,18 +15,18 @@ public class Forquilla {
     public synchronized boolean agafar(int id) {
         if (propietari == LLIURE) { // Si la forquilla està lliure
             propietari = id; // Assigna la forquilla al filòsof
-            return true; // Retorna true per indicar que s'ha agafat amb èxit
+            return true;
         }
-        return false; // Retorna false si la forquilla ja està en ús
+        return false;
     }
 
     // Mètode per deixar la forquilla
     public synchronized boolean deixar(int id) {
         if (propietari == id) { // Si el filòsof que deixa la forquilla és el propietari
             propietari = LLIURE; // Allibera la forquilla
-            return true; // Retorna true per indicar que s'ha deixat amb èxit
+            return true;
         }
-        return false; // Retorna false si el filòsof no és el propietari
+        return false;
     }
 
     // Getters

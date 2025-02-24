@@ -41,7 +41,7 @@ public class Taula {
 
     // Mètode principal
     public static void main(String[] args) {
-        Taula taula = new Taula(5); // Crear una taula amb 5 filòsofs
+        Taula taula = new Taula(4); // Crear una taula amb 4 filòsofs
         taula.showTaula(); // Mostrar l'estat inicial de la taula
         taula.cridarATaula(); // Iniciar els fils dels filòsofs
     }
