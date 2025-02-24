@@ -1,48 +1,40 @@
 public class Forquilla {
 
     // Propietats
-    private int numero; // El numero de la forquilla
-    private int propietari; // Quin filòsof la té (o LLIURE si ningú)
-    private final int LLIURE = -1;
+    private int numero; // Número de la forquilla
+    private int propietari; // ID del filòsof que té la forquilla
+    public static final int LLIURE = -1; // Constant que indica que la forquilla està lliure
 
     // Constructor
     public Forquilla(int numero) {
         this.numero = numero;
-        propietari = LLIURE; // Inicialment ningú la té
+        this.propietari = LLIURE; // Inicialment, la forquilla està lliure
     }
 
-    // Getters i Setters
+    // Mètode per agafar la forquilla
+    public synchronized boolean agafar(int id) {
+        if (propietari == LLIURE) { // Si la forquilla està lliure
+            propietari = id; // Assigna la forquilla al filòsof
+            return true; // Retorna true per indicar que s'ha agafat amb èxit
+        }
+        return false; // Retorna false si la forquilla ja està en ús
+    }
+
+    // Mètode per deixar la forquilla
+    public synchronized boolean deixar(int id) {
+        if (propietari == id) { // Si el filòsof que deixa la forquilla és el propietari
+            propietari = LLIURE; // Allibera la forquilla
+            return true; // Retorna true per indicar que s'ha deixat amb èxit
+        }
+        return false; // Retorna false si el filòsof no és el propietari
+    }
+
+    // Getters
     public int getNumero() {
         return numero;
     }
 
     public int getPropietari() {
         return propietari;
-    }
-
-    public void setPropietari(int propietari) {
-        this.propietari = propietari;
-    }
-
-    public boolean isLliure() {
-        return propietari == LLIURE;
-    }
-
-    // Agafar la forquilla (espera si està ocupada)
-    public synchronized void agafar(int idFilosof) {
-        while (!isLliure()) {
-            try {
-                wait(); // Espera fins que la forquilla sigui lliure
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        propietari = idFilosof;
-    }
-
-    // Deixar la forquilla i notificar als altres fils
-    public synchronized void deixar() {
-        propietari = LLIURE;
-        notifyAll(); // Notifica als altres fils que ara està lliure
     }
 }

@@ -15,17 +15,17 @@ public class Taula {
             forquilles[i] = new Forquilla(i);
         }
 
-        // Crear els filosofs, i assignar les forquilles a cada un
+        // Crear els filòsofs i assignar les forquilles a cada un
         for (int i = 0; i < numFilosofs; i++) {
-            comensals[i] = new Filosof("Filosof-" + i, forquilles[i], forquilles[(i + 1) % numFilosofs]);
+            comensals[i] = new Filosof(i, forquilles[i], forquilles[(i + 1) % numFilosofs]);
         }
     }
 
     // Mètode per mostrar la taula
     public void showTaula() {
         for (Filosof comensal : comensals) {
-            System.out.printf("%s → Forquilla esquerra: %d | Forquilla dreta: %d%n",
-                    comensal.getNom(),
+            System.out.printf("Filosof-%d → Forquilla esquerra: %d | Forquilla dreta: %d%n",
+                    comensal.getIdFilosof(),
                     comensal.getForquillaEsquerra().getNumero(),
                     comensal.getForquillaDreta().getNumero());
         }
@@ -33,7 +33,7 @@ public class Taula {
 
     // Mètode per iniciar els fils dels filòsofs
     public void cridarATaula() {
-        System.out.println("🍽️ Els filòsofs son cridats a taula!");
+        System.out.println("🍽️ Els filòsofs són cridats a taula!");
         for (Filosof comensal : comensals) {
             comensal.start();
         }
@@ -42,7 +42,7 @@ public class Taula {
     // Mètode principal
     public static void main(String[] args) {
         Taula taula = new Taula(5); // Crear una taula amb 5 filòsofs
-        taula.showTaula();
-        taula.cridarATaula();
+        taula.showTaula(); // Mostrar l'estat inicial de la taula
+        taula.cridarATaula(); // Iniciar els fils dels filòsofs
     }
 }
